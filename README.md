@@ -1,4 +1,4 @@
-<h1 align="center">Hi 👋, I'm azad</h1>
+<h1 align="center">Hi 👋, I'm Azad</h1>
 <h3 align="center">A passionate full-stack developer from Turkey</h3>
 
 - 👨‍💻 All of my projects are available at [https://github.com/azadarkan](https://github.com/azadarkan)
