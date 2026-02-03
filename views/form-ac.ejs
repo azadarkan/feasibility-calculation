@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/kojen.js"></script>
+    <script src="../assets/js/axios.min.js"></script>
+</head>
+<body>
+  <div class="card">
+    <div class="card-body">
+      <button class="btn btn-primary" style="float:right" onclick="window.location.href='/'">AnaSayfa</button>
+    </div>
+  </div>
+    <div class="card">
+        <div class="card-header">
+            Kojenerasyon tesisi verileri <%= formdata.formId %> <%= formdata.tarih %>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container text-center">
+                  <div class="row">
+                    <div class="col">
+                      <label for="formIsmi" class="form-label">Form İsmi:</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" id="formIsmi" value="<%= formIsim %>">
+                    </div>
+                    <div class="col">
+                      
+                    </div>
+                  </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="motor_adedi" class="form-label">Motor Adedi:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="motor_adedi" value="<%= formdata.motor_adedi %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        adet
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="elektrik_cikis_gucu_1" class="form-label">Elektrik Çıkış Gücü (1):</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="elektrik_cikis_gucu_1" value="<%= formdata.elektrik_cikis_gucu_1 %>" onchange="hesapla()">
+                        </div>
+                        <div class="col">
+                            kW
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="termal_isi_gucu_1" class="form-label">Termal Isı gücü (1):</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="termal_isi_gucu_1" value="<%= formdata.termal_isi_gucu_1 %>" onchange="hesapla()">
+                        </div>
+                        <div class="col">
+                            kW
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="yakit_tuketimi_1" class="form-label">Yakıt Tüketimi (1):</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="yakit_tuketimi_1" disabled>
+                        </div>
+                        <div class="col">
+                            kW
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="ic_ihtiyac_dahili_kayiplar" class="form-label">İç ihtiyaç ve Dahili Kayıplar:</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="ic_ihtiyac_dahili_kayiplar" value="<%= formdata.ic_ihtiyac_dahili_kayiplar %>" onchange="hesapla()">
+                        </div>
+                        <div class="col">
+                            %
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="net_elektrik_uretimi" class="form-label">Net Elektrik Üretimi:</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="net_elektrik_uretimi" disabled>
+                        </div>
+                        <div class="col">
+                            kW
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="elektrik_verimi" class="form-label">Elektrik Verimi:</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="elektrik_verimi" disabled>
+                        </div>
+                        <div class="col">
+                            %
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="isil_verim" class="form-label">Isıl Verim :</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="isil_verim" disabled>
+                        </div>
+                        <div class="col">
+                            %
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="toplam_verim" class="form-label">Toplam Verim:</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="toplam_verim" disabled>
+                        </div>
+                        <div class="col">
+                            %
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="motorun_yag_tuketimi" class="form-label">Motorun yağ tüketimi:</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="motorun_yag_tuketimi" value="<%= formdata.motorun_yag_tuketimi %>" onchange="hesapla()">
+                        </div>
+                        <div class="col">
+                            g/kWh
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="motor_basina_bakim_fiyati" class="form-label">Motor başına bakım fiyatı:</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="motor_basina_bakim_fiyati" value="<%= formdata.motor_basina_bakim_fiyati %>" onchange="hesapla()">
+                        </div>
+                        <div class="col">
+                            €/h
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <label for="tesis_bakim_fiyati" class="form-label">Tesis bakım fiyatı:</label>
+                        </div>
+                        <div class="col">
+                          <input type="number" class="form-control" id="tesis_bakim_fiyati" value="<%= formdata.tesis_bakim_fiyati %>" onchange="hesapla()">
+                        </div>
+                        <div class="col">
+                            €/h
+                          </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+            Tesis ve Ekonomi Verileri
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container text-center">
+                    <div class="row">
+                      <div class="col">
+                        <label for="elektrik_1" class="form-label">Elektrik (1):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="elektrik_1" value="<%= formdata.elektrik_1 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        TL/kWh
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="dogalgaz_serbest_tuk_2" class="form-label">Doğalgaz (Serbest Tük.) (2):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="dogalgaz_serbest_tuk_2" value="<%= formdata.dogalgaz_serbest_tuk_2 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        TL/m3
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="dogalgaz_elektrik_uretimi_3" class="form-label">Doğalgaz (Elektrik Üretimi) (3):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="dogalgaz_elektrik_uretimi_3" value="<%= formdata.dogalgaz_elektrik_uretimi_3 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        TL/m3
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="mevcut_kazan_verimi_4" class="form-label">Mevcut Kazan Verimi (4):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="mevcut_kazan_verimi_4" value="<%= formdata.mevcut_kazan_verimi_4 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        %
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="isi_maliyeti" class="form-label">Isı Maliyeti:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="isi_maliyeti" disabled>
+                      </div>
+                      <div class="col">
+                        TL/kWh
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="euro_kuru_5" class="form-label">Euro Kuru (5):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="euro_kuru_5" value="<%= formdata.euro_kuru_5 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        TL/EURO
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="calisma_suresi" class="form-label">Çalışma Süresi:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="calisma_suresi" value="<%= formdata.calisma_suresi %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        saat/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="yakit_alt_isil_degeri" class="form-label">Yakıt Alt Isıl Değeri:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="yakit_alt_isil_degeri" value="<%= formdata.yakit_alt_isil_degeri %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        kcal/m3
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="yillik_ort_isi_kullanimi_orani_6" class="form-label">Yıllık Ort. Isı Kullanım Oranı (6):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="yillik_ort_isi_kullanimi_orani_6" value="<%= formdata.yillik_ort_isi_kullanimi_orani_6 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        %
+                      </div>
+                    </div>
+            </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+            Üretim/Tüketim Verileri
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container text-center">
+                    <div class="row">
+                      <div class="col">
+                        <label for="yakit_tuketimi" class="form-label">Yakıt Tüketimi:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="yakit_tuketimi" disabled>
+                      </div>
+                      <div class="col">
+                        m3/saat
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="senelik_yakit_tuketimi" class="form-label">Senelik Yakıt Tüketimi:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="senelik_yakit_tuketimi" disabled>
+                      </div>
+                      <div class="col">
+                        m3/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="senelik_elektrik_uretimi" class="form-label">Senelik Elektrik Üretimi :</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="senelik_elektrik_uretimi" disabled>
+                      </div>
+                      <div class="col">
+                        kWh/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="yillik_kul_isi_miktari" class="form-label">Yıllık Kullanılabilir Isı Miktarı:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="yillik_kul_isi_miktari" disabled>
+                      </div>
+                      <div class="col">
+                        kWh/yıl
+                      </div>
+                    </div>
+            </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+            İşletme Gelirleri
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container text-center">
+                    <div class="row">
+                      <div class="col">
+                        <label for="elektrik_geliri" class="form-label">Elektrik Geliri:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="elektrik_geliri" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="isi_geliri" class="form-label">Isı Geliri:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="isi_geliri" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="toplam_gelir" class="form-label">Toplam Gelir:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="toplam_gelir" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+            </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+            İşletme Giderleri
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container text-center">
+                    <div class="row">
+                      <div class="col">
+                        <label for="dogalgaz_gideri" class="form-label">Doğalgaz Gideri:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="dogalgaz_gideri" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="yaglama_yagi_gideri" class="form-label">Yağlama Yağı Gideri:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="yaglama_yagi_gideri" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="bakim_maliyeti_7" class="form-label">Bakım Maliyeti (7):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="bakim_maliyeti_7" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="personel_gideri_8" class="form-label">Personel Gideri (8):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="personel_gideri_8" value="<%= formdata.personel_gideri_8 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="tesis_sigorta_bedeli" class="form-label">Tesis Sigorta Bedeli:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="tesis_sigorta_bedeli" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="toplam_gider" class="form-label">Toplam Gider:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="toplam_gider" disabled>
+                      </div>
+                      <div class="col">
+                        TL/yıl
+                      </div>
+                    </div>
+            </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+            Diğer Hesaplamalar
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container text-center">
+                    <div class="row">
+                      <div class="col">
+                        <label for="yillik_santral_geliri" class="form-label">Yıllık Santral Geliri:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="yillik_santral_geliri" disabled>
+                      </div>
+                      <div class="col">
+                        EURO/yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="toplam_yatirim_tutari_9" class="form-label">Toplam Yatırım Tutarı (9):</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="toplam_yatirim_tutari_9" value="<%= formdata.toplam_yatirim_tutari_9 %>" onchange="hesapla()">
+                      </div>
+                      <div class="col">
+                        EURO+KDV
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="proje_bazli_geri_odeme_suresi" class="form-label">Proje Basit Geri Ödeme Süresi:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="proje_bazli_geri_odeme_suresi" disabled>
+                      </div>
+                      <div class="col">
+                        yıl
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="elektrik_birim_maliyeti" class="form-label">Elektrik Birim Maliyeti:</label>
+                      </div>
+                      <div class="col">
+                        <input type="number" class="form-control" id="elektrik_birim_maliyeti" disabled>
+                      </div>
+                      <div class="col">
+                        TL/kWh
+                      </div>
+                    </div>
+            </form>
+        </div>
+      </div>
+      <form>
+        <input type="hidden" id="formId" value="<%= formdata.formId %>">
+        <div class="row">
+          <button type="button" class="btn btn-warning" onclick="dataOlustur()">Kaydet</button>
+        </div>
+      </form>
+
+      <script>
+        hesapla();
+      </script>
+
+  </body>
+</html>

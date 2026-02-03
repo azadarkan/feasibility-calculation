@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kojenerasyon Tesisi Hesaplama Raporu</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 10px; color: #333; font-size: 11px; }
+    h1, h2 { color: #007bff; margin: 5px 0; }
+    h1 { text-align: center; margin-bottom: 5px; font-size: 18px; }
+    h2 { font-size: 14px; margin-top: 15px; margin-bottom: 8px; }
+    p.date { text-align: center; font-size: 10px; color: #666; margin-bottom: 15px; }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 10px; }
+    th, td { border: 1px solid #ccc; padding: 4px; }
+    th { background: #f8f9fa; text-align: left; font-size: 10px; }
+    td.value { text-align: right; font-weight: bold; color: #007bff; }
+    td.unit { text-align: center; font-style: italic; color: #555; }
+    .summary { background: #e3f2fd; padding: 8px; border: 1px solid #2196f3; border-radius: 3px; margin-top: 15px; }
+    .summary h3 { margin-top: 0; color: #1976d2; font-size: 12px; }
+    .footer { text-align: center; margin-top: 20px; font-size: 9px; color: #777; border-top: 1px solid #ccc; padding-top: 5px; }
+    .two-column { display: flex; gap: 15px; }
+    .column { flex: 1; }
+    .column table { table-layout: fixed; }
+    .column table th:first-child,
+    .column table td:first-child { width: 60%; }
+    .column table th:nth-child(2),
+    .column table td:nth-child(2) { width: 25%; }
+    .column table th:last-child,
+    .column table td:last-child { width: 15%; }
+  </style>
+</head>
+<body>
+  <h1>Kojenerasyon Tesisi Hesaplama Raporu</h1>
+  <p class="date">Proje İsmi: <%= data.projeIsim %></p>
+  <p class="date">Hesaplama Tarihi: <%= new Date().toLocaleDateString("tr-TR") %></p>
+
+  <div class="two-column">
+    <div class="column">
+      <!-- Temel Tesis Verileri -->
+      <h2>Temel Tesis Verileri</h2>
+      <table>
+        <tr><th>Motor Markası</th><td class="value"><%= data.motorMarkasi %></td><td class="unit">marka</td></tr>  
+        <tr><th>Motor Modeli</th><td class="value"><%= data.motorModeli %></td><td class="unit">model</td></tr>  
+        <tr><th>Motor Adedi</th><td class="value"><%= data.motor_adedi %></td><td class="unit">adet</td></tr>  
+        <tr><th>Elektrik Çıkış Gücü</th><td class="value"><%= data.elektrik_cikis_gucu %></td><td class="unit">kW</td></tr>  
+        <tr><th>Termal Isı Gücü</th><td class="value"><%= data.termal_isi_gucu %></td><td class="unit">kW</td></tr>  
+        <tr><th>Motor Elektrik Verimi</th><td class="value"><%= data.motor_elektrik_verimi %></td><td class="unit">%</td></tr>  
+        <tr><th>Motorun Yağ Tüketimi</th><td class="value"><%= data.motorun_yag_tuketimi %></td><td class="unit">g/kWh</td></tr>
+        <tr><th>Termal Verim</th><td class="value"><%= data.termal_verim %></td><td class="unit">%</td></tr>
+        <tr><th>İç İhtiyaç Dahili Kayıplar</th><td class="value"><%= data.ic_ihtiyac_dahili_kayiplar %></td><td class="unit">%</td></tr>  
+        <tr><th>Motor Başına Bakım Fiyatı</th><td class="value"><%= data.motor_basina_bakim_fiyati %></td><td class="unit">€/h</td></tr>  
+      </table>
+
+      <!--Ekonomik Veriler-->
+      <h2>Ekonomik Veriler</h2>
+      <table>
+        <tr><th>Elektrik</th><td class="value"><%= data.elektrik %></td><td class="unit">TL/kWh</td></tr>
+        <tr><th>Doğalgaz (Serbest Tük.)</th><td class="value"><%= data.dogalgaz_serbest_tuk %></td><td class="unit">TL/m³</td></tr>
+        <tr><th>Doğalgaz Elektrik Üretimi</th><td class="value"><%= data.dogalgaz_elektrik_uretimi %></td><td class="unit">kWh/yıl</td></tr>
+        <tr><th>Mevcut Kazan Verimi</th><td class="value"><%= data.mevcut_kazan_verimi %></td><td class="unit">%</td></tr>
+        <tr><th>Euro Kuru</th><td class="value"><%= data.euro_kuru %></td><td class="unit">€</td></tr>
+        <tr><th>Çalışma Süresi</th><td class="value"><%= data.calisma_suresi %></td><td class="unit">saat/yıl</td></tr>
+        <tr><th>Yakıt Alt Isıl Değeri</th><td class="value"><%= data.yakit_alt_isil_degeri %></td><td class="unit">kWh/m³</td></tr>
+        <tr><th>Yıllık Ortalama Isı Kullanımı Oranı</th><td class="value"><%= data.yillik_ort_isi_kullanimi_orani %></td><td class="unit">%</td></tr>
+        <tr><th>Personel Gideri</th><td class="value"><%= data.personel_gideri %></td><td class="unit">TL/yıl</td></tr>
+        <tr><th>Toplam Yatırım Tutarı</th><td class="value"><%= data.toplam_yatirim_tutari %></td><td class="unit">TL</td></tr>
+      </table>
+    </div>
+    <div class="column">
+      <!-- Hesaplanan Değerler -->
+      <h2>Hesaplanan Değerler</h2>
+      <table>
+        <tr><th>Yakıt Tüketimi</th><td class="value"><%= data.yakit_tuketimi_kw %></td><td class="unit">kW</td></tr>
+        <tr><th>Net Elektrik Üretimi</th><td class="value"><%= data.net_elektrik_uretimi %></td><td class="unit">kW</td></tr>
+        <tr><th>Net Isı Üretimi</th><td class="value"><%= data.net_isi_uretimi %></td><td class="unit">kW</td></tr>
+        <tr><th>Isıl Verim</th><td class="value"><%= data.isil_verim %></td><td class="unit">%</td></tr>
+        <tr><th>Toplam Verim</th><td class="value"><%= data.toplam_verim %></td><td class="unit">%</td></tr>
+        <tr><th>Isı Maliyeti</th><td class="value"><%= data.isi_maliyeti %></td><td class="unit">TL/kWh</td></tr>
+      </table>
+
+      <!-- Üretim / Tüketim Verileri -->
+      <h2>Üretim / Tüketim Verileri</h2>
+      <table>
+        <tr><th>Yakıt Tüketimi</th><td class="value"><%= data.yakit_tuketimi_m3 %></td><td class="unit">m³/saat</td></tr>
+        <tr><th>Senelik Yakıt Tüketimi</th><td class="value"><%= data.senelik_yakit_tuketimi %></td><td class="unit">m³/yıl</td></tr>
+        <tr><th>Senelik Elektrik Üretimi</th><td class="value"><%= data.senelik_elektrik_uretimi %></td><td class="unit">kWh/yıl</td></tr>
+        <tr><th>Yıllık Kullanılabilir Isı Miktarı</th><td class="value"><%= data.yillik_kul_isi_miktari %></td><td class="unit">kWh/yıl</td></tr>
+      </table>
+      
+      <!-- İşletme Gelirleri -->
+      <h2>İşletme Gelirleri</h2>
+      <table>
+        <tr><th>Elektrik Geliri</th><td class="value"><%= data.elektrik_geliri %></td><td class="unit">TL/yıl</td></tr>
+        <tr><th>Isı Geliri</th><td class="value"><%= data.isi_geliri %></td><td class="unit">TL/yıl</td></tr>
+        <tr><th>Toplam Gelir</th><td class="value"><%= data.toplam_gelir %></td><td class="unit">TL/yıl</td></tr>
+      </table>
+
+      <!-- İşletme Giderleri -->
+      <h2>İşletme Giderleri</h2>
+      <table>
+        <tr><th>Doğalgaz Gideri</th><td class="value"><%= data.dogalgaz_gideri %></td><td class="unit">TL/yıl</td></tr>
+        <tr><th>Yağlama Yağı Gideri</th><td class="value"><%= data.yaglama_yagi_gideri %></td><td class="unit">TL/yıl</td></tr>
+        <tr><th>Bakım Maliyeti</th><td class="value"><%= data.bakim_maliyeti %></td><td class="unit">TL/yıl</td></tr>
+        <tr><th>Tesis Sigorta Bedeli</th><td class="value"><%= data.tesis_sigorta_bedeli %></td><td class="unit">TL/yıl</td></tr>
+        <tr><th>Toplam Gider</th><td class="value"><%= data.toplam_gider %></td><td class="unit">TL/yıl</td></tr>
+      </table>
+
+      <!-- Diğer Hesaplamalar -->
+      <h2>Diğer Hesaplamalar</h2>
+      <table>
+        <tr><th>Yıllık Santral Geliri</th><td class="value"><%= data.yillik_santral_kari %></td><td class="unit">€/yıl</td></tr>
+        <tr><th>Proje Basit Geri Ödeme Süresi</th><td class="value"><%= data.proje_basit_geri_odeme_suresi %></td><td class="unit">yıl</td></tr>
+        <tr><th>Elektrik Birim Maliyeti</th><td class="value"><%= data.elektrik_birim_maliyeti %></td><td class="unit">TL/kWh</td></tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
